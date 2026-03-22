@@ -1,0 +1,1098 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  /* 博物馆大厅感：地砖+聚光灯 */
+  background:
+    radial-gradient(circle at top, rgba(249, 250, 251, 0.24), transparent 60%),
+    repeating-linear-gradient(
+      90deg,
+      #020617 0,
+      #020617 38px,
+      #020c29 40px,
+      #020c29 78px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      #020617 0,
+      #020617 38px,
+      #020c29 40px,
+      #020c29 78px
+    );
+  color: #e5e7eb;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 100vh;
+}
+
+.app-header {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin-top: 2px;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.app-footer {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #6b7280;
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  padding-top: 4px;
+  flex-shrink: 0;
+}
+
+.card-panel {
+  background: radial-gradient(circle at top left, rgba(55, 65, 81, 0.6), rgba(15, 23, 42, 0.95));
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  background: rgba(31, 41, 55, 0.9);
+  color: #e5e7eb;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  transition: all 0.2s ease-out;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #f97316, #e11d48);
+  border-color: transparent;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.btn.small {
+  padding: 3px 10px;
+  font-size: 0.75rem;
+}
+
+/* 模式选择 */
+.mode-tip {
+  margin: 4px 0 8px;
+  font-size: 0.85rem;
+  color: #d1d5db;
+}
+
+.mode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* 大厅样式 */
+.lobby-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.form-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.form-row input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  background: rgba(15, 23, 42, 0.8);
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.status-text {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.status-text.connected {
+  color: #10b981;
+}
+
+/* 等待房间样式 */
+.room-info {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.room-code-display {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fbbf24;
+  margin-bottom: 15px;
+  letter-spacing: 0.3em;
+}
+
+.player-list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.waiting-player {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  font-size: 0.9rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.waiting-player.is-you {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.waiting-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* 设置样式 */
+.setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.setup-form label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.setup-form input {
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  background: rgba(15, 23, 42, 0.8);
+  color: #e5e7eb;
+}
+
+#player-names {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rules {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #d1d5db;
+}
+
+.rules summary {
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.rules ul {
+  padding-left: 18px;
+  margin-top: 4px;
+}
+
+/* 顶部信息栏 */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.round-info span:first-child {
+  margin-right: 12px;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+.deck-info {
+  color: #9ca3af;
+}
+
+/* 环绕式布局 - 顺时针：下->左->上->右 */
+.circular-board {
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+  padding: 5px;
+}
+
+.player-position {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-position.top {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.player-position.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.player-position.right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.player-position.bottom {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* 5人布局时额外的玩家位置 */
+.player-position.bottom-extra {
+  grid-column: 1 / 4;
+  grid-row: 4;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+.center-area {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 玩家卡片样式 */
+.player-card {
+  background: radial-gradient(circle at top, rgba(55, 65, 81, 0.8), rgba(15, 23, 42, 0.95));
+  border-radius: 12px;
+  padding: 10px;
+  border: 2px solid transparent;
+  min-width: 150px;
+  max-width: 200px;
+  animation: fadeIn 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.player-card.current {
+  border-color: #f59e0b;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.8); }
+}
+
+.player-card.waiting-turn {
+  opacity: 0.7;
+}
+
+.player-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.player-card-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.player-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: radial-gradient(circle at top, rgba(248, 250, 252, 0.98), rgba(148, 163, 184, 0.95));
+  border: 1px solid rgba(15, 23, 42, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.player-card-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.player-card-tags {
+  display: flex;
+  gap: 4px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  background: rgba(31, 41, 55, 0.9);
+  border: 1px solid rgba(75, 85, 99, 0.9);
+}
+
+.tag.dog {
+  border-color: #38bdf8;
+  color: #e0f2fe;
+  background: rgba(56, 189, 248, 0.2);
+}
+
+.tag.boss {
+  border-color: #fbbf24;
+  color: #fef3c7;
+  background: rgba(251, 191, 36, 0.2);
+}
+
+.player-card-stats {
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.75rem;
+  color: #d1d5db;
+  margin-bottom: 6px;
+}
+
+.player-card-stats span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-weight: bold;
+  color: #fbbf24;
+  font-size: 0.9rem;
+}
+
+/* 本轮赃物展示 - 圆形 */
+.player-round-loot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  min-height: 32px;
+}
+
+/* 圆形赃物 */
+.loot-chip {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.9), rgba(30, 64, 175, 0.95));
+  border: 2px solid rgba(148, 163, 184, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: popIn 0.3s ease;
+  color: #fff;
+  font-weight: 600;
+}
+
+.loot-chip.boss {
+  background: radial-gradient(circle at 30% 30%, rgba(250, 204, 21, 0.95), rgba(180, 140, 20, 0.98));
+  color: #1f2937;
+  border-color: #facc15;
+}
+
+/* 白点标记 - 单个白点 */
+.loot-chip.alibi::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: -2px;
+  right: -2px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* 两个白点 - 用于值为0的赃物 */
+.loot-chip.alibi-double::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: -2px;
+  right: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.loot-chip.alibi-double::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: -2px;
+  right: -2px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 中央区域 */
+.center-panel {
+  text-align: center;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+.center-panel h3 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #fbbf24;
+}
+
+.loot-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  min-height: 70px;
+}
+
+/* 中央圆形赃物 */
+.loot-token {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid rgba(148, 163, 184, 0.85);
+  text-align: center;
+  font-size: 0.9rem;
+  background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.9), rgba(30, 64, 175, 0.95));
+  cursor: default;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 中央赃物白点 - 单个 */
+.loot-token.alibi::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: 2px;
+  right: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* 中央赃物两个白点 - 用于值为0的赃物 */
+.loot-token.alibi-double::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: 2px;
+  right: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.loot-token.alibi-double::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: 2px;
+  right: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.loot-token.selectable {
+  cursor: pointer;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.7);
+  animation: pulse-select 1.5s infinite;
+}
+
+@keyframes pulse-select {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.7); }
+  50% { box-shadow: 0 0 0 5px rgba(251, 191, 36, 0.4); }
+}
+
+.loot-token.selectable:hover {
+  transform: translateY(-4px) scale(1.08);
+  background: radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.95), rgba(37, 99, 235, 0.98));
+}
+
+.loot-token.boss {
+  border-color: #facc15;
+  background: radial-gradient(circle at 30% 30%, rgba(250, 204, 21, 0.95), rgba(180, 140, 20, 0.98));
+  color: #1f2937;
+}
+
+.special-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 0.75rem;
+}
+
+.special-token {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px dashed rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+}
+
+.token-icon {
+  font-size: 1.2rem;
+}
+
+.owner-label {
+  font-size: 0.75rem;
+  color: #facc15;
+}
+
+.banner {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  font-size: 0.9rem;
+  color: #fef3c7;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+/* 手牌区域 */
+.hand-panel {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.hand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.hand-header h2 {
+  font-size: 1rem;
+}
+
+.hand-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-count {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.hand-cards {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 4px;
+  justify-content: center;
+  min-height: 130px;
+}
+
+.card {
+  width: 86px;
+  height: 122px;
+  padding: 8px 6px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 2px solid rgba(15, 23, 42, 0.85);
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.9);
+  transition: all 0.2s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  color: #1f2937;
+}
+
+.card.number {
+  border-color: #16a34a;
+}
+
+.card.greedy {
+  border-color: #f97316;
+}
+
+.card.boss {
+  border-color: #eab308;
+  background: linear-gradient(135deg, #fef3c7, #f9fafb);
+}
+
+.card.dog {
+  border-color: #0ea5e9;
+}
+
+.card:hover:not(:disabled) {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hand-cards .card + .card {
+  margin-left: -25px;
+}
+
+@media (max-width: 600px) {
+  .hand-cards .card + .card {
+    margin-left: -30px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hand-cards .card + .card {
+    margin-left: -25px;
+  }
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.card-sub {
+  font-size: 0.65rem;
+  margin-top: 4px;
+  line-height: 1.3;
+  color: #4b5563;
+}
+
+.card-count-notice {
+  width: 100%;
+  text-align: center;
+  color: #fbbf24;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.action-log {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  min-height: 60px;
+  max-height: 80px;
+  overflow-y: auto;
+  color: #e5e7eb;
+  text-align: left;
+  padding: 8px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 6px;
+}
+
+.action-item {
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.action-item:last-child {
+  border-bottom: none;
+}
+
+.action-item:first-child {
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+/* Emoji表情面板 */
+.emoji-panel {
+  margin-top: 8px;
+  padding: 6px 8px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+}
+
+.emoji-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.emoji-btn {
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.emoji-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.2);
+}
+
+/* Emoji气泡动画 */
+@keyframes emojiFloat {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(0.5);
+  }
+  20% {
+    transform: translateX(-50%) translateY(-20px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-60px) scale(1);
+  }
+}
+
+/* 我的历史赃物面板 */
+.my-loot-panel {
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 170px;
+  background: radial-gradient(circle at top, rgba(31, 41, 55, 0.98), rgba(15, 23, 42, 0.99));
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  padding: 12px;
+  z-index: 40;
+  max-height: 60vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.loot-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  padding-bottom: 6px;
+}
+
+.loot-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.loot-round-group {
+  margin-bottom: 8px;
+}
+
+.loot-round-title {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+/* 对话框 */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  animation: fadeIn 0.2s ease;
+}
+
+.dialog {
+  background: radial-gradient(circle at top, rgba(31, 41, 55, 0.98), rgba(15, 23, 42, 1));
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.9);
+  max-width: 360px;
+  width: 90%;
+  animation: scaleIn 0.2s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.dialog h3 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.dialog p {
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.dialog-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.dialog-options .btn {
+  width: 100%;
+  padding: 10px;
+}
+
+/* Toast提示 */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  border-radius: 24px;
+  background: rgba(16, 185, 129, 0.95);
+  color: white;
+  font-size: 0.9rem;
+  z-index: 60;
+  animation: slideDown 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-50%) translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 飞行动画 */
+.flying-token {
+  position: fixed;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.95), rgba(37, 99, 235, 0.98));
+  border: 2px solid rgba(148, 163, 184, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 40;
+  transform: translate(-50%, -50%);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease-out;
+}
+
+.flying-token.boss {
+  background: radial-gradient(circle at 30% 30%, rgba(250, 204, 21, 0.95), rgba(180, 140, 20, 0.98));
+  color: #1f2937;
+  border-color: #facc15;
+}
+
+.flying-token.alibi::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: -2px;
+  right: -2px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+/* 响应式调整 */
+@media (max-width: 900px) {
+  .circular-board {
+    grid-template-columns: 130px 1fr 130px;
+  }
+  
+  .player-card {
+    min-width: 110px;
+    padding: 8px;
+  }
+  
+  .player-card-name {
+    font-size: 0.8rem;
+  }
+  
+  .my-loot-panel {
+    width: 140px;
+    right: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .circular-board {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+  
+  .player-position.top {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  
+  .player-position.left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  
+  .player-position.right {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  
+  .center-area {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+  
+  .player-position.bottom {
+    grid-column: 1 / 3;
+    grid-row: 4;
+  }
+  
+  .my-loot-panel {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-height: 150px;
+    margin-top: 10px;
+  }
+  
+  }
+}

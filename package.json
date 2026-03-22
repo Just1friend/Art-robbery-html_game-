@@ -1,0 +1,16 @@
+{
+  "name": "robbery-art-online",
+  "version": "1.0.0",
+  "description": "抢劫艺术 - 联机桌游",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

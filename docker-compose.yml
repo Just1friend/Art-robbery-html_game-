@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  game:
+    build: .
+    container_name: art-heist-game
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    environment:
+      - PORT=3001
+    # 如果需要使用nginx反向代理，可以注释掉上面的ports，使用下面的networks
+    # networks:
+    #   - web
+
+# 如果使用nginx反向代理，取消下面的注释
+# networks:
+#   web:
+#     external: true
